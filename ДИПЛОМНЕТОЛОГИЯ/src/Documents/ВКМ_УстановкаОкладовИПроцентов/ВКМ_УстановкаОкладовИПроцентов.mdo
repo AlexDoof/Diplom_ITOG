@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Document xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="410b0992-cee0-4fab-8353-50ee88fd8ec2">
+  <producedTypes>
+    <objectType typeId="fe6f2f77-1f87-442a-9af6-052baf074edd" valueTypeId="2568de43-e558-4e13-8aee-9b42ac51ad2e"/>
+    <refType typeId="acf4d623-7ad8-4bdf-890e-38cfade2ddc1" valueTypeId="19e9a2ef-0f3e-49d1-8ef7-fef58cd8c29e"/>
+    <selectionType typeId="f862b017-365c-4178-a77b-837898aaabf6" valueTypeId="6e77820e-5962-4f65-af2c-03aecb3edb84"/>
+    <listType typeId="01eac759-5e06-4256-a930-fa79215c617e" valueTypeId="4dc9a8b5-f8c7-4d75-9660-8f9f2ac99242"/>
+    <managerType typeId="69988386-acc6-49a8-b809-fcd255d3af43" valueTypeId="0d4739d4-dd59-4138-84b6-4b9ffbb08b78"/>
+  </producedTypes>
+  <name>ВКМ_УстановкаОкладовИПроцентов</name>
+  <synonym>
+    <key>ru</key>
+    <value>Установка окладов и процентов</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <inputByString>Document.ВКМ_УстановкаОкладовИПроцентов.StandardAttribute.Number</inputByString>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <numberType>String</numberType>
+  <numberLength>9</numberLength>
+  <numberAllowedLength>Variable</numberAllowedLength>
+  <checkUnique>true</checkUnique>
+  <autonumbering>true</autonumbering>
+  <defaultObjectForm>Document.ВКМ_УстановкаОкладовИПроцентов.Form.ФормаДокумента</defaultObjectForm>
+  <realTimePosting>Deny</realTimePosting>
+  <registerRecords>InformationRegister.ВКМ_УсловияОплатыСотрудников</registerRecords>
+  <postInPrivilegedMode>true</postInPrivilegedMode>
+  <unpostInPrivilegedMode>true</unpostInPrivilegedMode>
+  <attributes uuid="1e2f47d3-38dd-4e32-aa0c-6499654dfdb1">
+    <name>Сотрудник</name>
+    <synonym>
+      <key>ru</key>
+      <value>Сотрудник</value>
+    </synonym>
+    <type>
+      <types>CatalogRef.ВКМ_Сотрудники</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="e3d59571-ff7f-43e7-88fa-e9aafd453f92">
+    <name>Оклад</name>
+    <synonym>
+      <key>ru</key>
+      <value>Оклад за месяц</value>
+    </synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers>
+        <precision>15</precision>
+        <scale>2</scale>
+        <nonNegative>true</nonNegative>
+      </numberQualifiers>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="7b6bb9e7-e902-47f5-819a-9e9956a1219b">
+    <name>ПроцентЗаВыполненныеРаботы</name>
+    <synonym>
+      <key>ru</key>
+      <value>Процент за выполненные работы</value>
+    </synonym>
+    <type>
+      <types>Number</types>
+      <numberQualifiers>
+        <precision>3</precision>
+        <nonNegative>true</nonNegative>
+      </numberQualifiers>
+    </type>
+    <minValue xsi:type="core:StringValue">
+      <value>0</value>
+    </minValue>
+    <maxValue xsi:type="core:StringValue">
+      <value>100</value>
+    </maxValue>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <forms uuid="d5a4e020-3f76-4e26-a568-d43c7f164beb">
+    <name>ФормаДокумента</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма документа</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:Document>

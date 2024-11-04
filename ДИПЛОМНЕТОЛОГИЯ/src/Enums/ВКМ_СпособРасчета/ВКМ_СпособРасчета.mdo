@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Enum xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="10dc2348-8bfa-4ba4-859d-ebc4f41161bc">
+  <producedTypes>
+    <refType typeId="1871cb30-dfd2-4f1a-bb7e-ef71ab2770f0" valueTypeId="d6806e17-252b-4fc9-86d5-d071e3171e12"/>
+    <listType typeId="dc9582cf-02be-48d4-9ca2-c78ec6c26b4e" valueTypeId="7ee217ea-fb7c-4665-ac3a-dffa833ad5af"/>
+    <managerType typeId="ce779575-11e4-41fd-9145-2794260b901f" valueTypeId="36445882-8db2-446a-8bca-5a4f83abc595"/>
+  </producedTypes>
+  <name>ВКМ_СпособРасчета</name>
+  <synonym>
+    <key>ru</key>
+    <value>ВКМ способ расчета</value>
+  </synonym>
+  <quickChoice>true</quickChoice>
+  <choiceMode>BothWays</choiceMode>
+  <enumValues uuid="6d3bca53-54a9-4fea-aa7c-3246aa5b8c2b">
+    <name>ДневнаяСтавка</name>
+    <synonym>
+      <key>ru</key>
+      <value>Дневная ставка</value>
+    </synonym>
+  </enumValues>
+  <enumValues uuid="8f32a7a4-9518-4330-91c7-b9959210b94c">
+    <name>ПремияЗаВыполненныеРаботы</name>
+    <synonym>
+      <key>ru</key>
+      <value>Премия за выполненные работы</value>
+    </synonym>
+  </enumValues>
+</mdclass:Enum>

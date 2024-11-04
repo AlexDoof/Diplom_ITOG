@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:CommandGroup xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="0716030e-4fea-4f63-80ce-db99db17d601">
+  <name>ВКМ_ПланыВидовРасчета</name>
+  <synonym>
+    <key>ru</key>
+    <value>Планы видов расчета</value>
+  </synonym>
+  <representation>Auto</representation>
+</mdclass:CommandGroup>

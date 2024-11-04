@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdclass:Catalog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:core="http://g5.1c.ru/v8/dt/mcore" xmlns:mdclass="http://g5.1c.ru/v8/dt/metadata/mdclass" uuid="092fad39-e46c-40e3-83e5-6baa6404f5e9">
+  <producedTypes>
+    <objectType typeId="79543710-e1c6-4970-bf2a-77460ae111a3" valueTypeId="39dd6ee7-ba09-496e-8287-a9e6ae18de8b"/>
+    <refType typeId="f6d7644f-2c4f-4605-b37c-2607754764de" valueTypeId="dc00fac0-9757-4040-a634-00fb506b7e30"/>
+    <selectionType typeId="39ff83c2-bccd-4cf4-9d75-5017b74bbfc7" valueTypeId="a567c41e-d3a7-42a9-a735-e20d32f55598"/>
+    <listType typeId="8632f223-154e-4c01-9d67-51c7741293c9" valueTypeId="77075066-aa2a-42fc-a298-caa6417c4f57"/>
+    <managerType typeId="3a884f91-1eb6-4296-b788-9f4c2f1a1492" valueTypeId="b8b23a1f-1f7b-47bf-b720-01e830c781fd"/>
+  </producedTypes>
+  <name>ВКМ_УведомленияТелеграмБоту</name>
+  <synonym>
+    <key>ru</key>
+    <value>Уведомления телеграм боту</value>
+  </synonym>
+  <useStandardCommands>true</useStandardCommands>
+  <fullTextSearchOnInputByString>DontUse</fullTextSearchOnInputByString>
+  <createOnInput>Use</createOnInput>
+  <dataLockControlMode>Managed</dataLockControlMode>
+  <fullTextSearch>Use</fullTextSearch>
+  <levelCount>2</levelCount>
+  <foldersOnTop>true</foldersOnTop>
+  <codeType>String</codeType>
+  <codeAllowedLength>Variable</codeAllowedLength>
+  <editType>InDialog</editType>
+  <choiceMode>BothWays</choiceMode>
+  <defaultObjectForm>Catalog.ВКМ_УведомленияТелеграмБоту.Form.ФормаЭлемента</defaultObjectForm>
+  <attributes uuid="719fb127-6280-4d18-b0fb-caa9a5ddcd33">
+    <name>ТекстСообщения</name>
+    <synonym>
+      <key>ru</key>
+      <value>Текст сообщения</value>
+    </synonym>
+    <type>
+      <types>String</types>
+      <stringQualifiers/>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:StringValue">
+      <value></value>
+    </fillValue>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <attributes uuid="b2ae61ec-adf4-43ad-a732-1dff097b5313">
+    <name>Отправлено</name>
+    <synonym>
+      <key>ru</key>
+      <value>Отправлено</value>
+    </synonym>
+    <type>
+      <types>Boolean</types>
+    </type>
+    <minValue xsi:type="core:UndefinedValue"/>
+    <maxValue xsi:type="core:UndefinedValue"/>
+    <fillValue xsi:type="core:UndefinedValue"/>
+    <fullTextSearch>Use</fullTextSearch>
+    <dataHistory>Use</dataHistory>
+  </attributes>
+  <forms uuid="8094fca9-d084-48d4-a0f9-07b1b7db93af">
+    <name>ФормаЭлемента</name>
+    <synonym>
+      <key>ru</key>
+      <value>Форма элемента</value>
+    </synonym>
+    <usePurposes>PersonalComputer</usePurposes>
+    <usePurposes>MobileDevice</usePurposes>
+  </forms>
+</mdclass:Catalog>
