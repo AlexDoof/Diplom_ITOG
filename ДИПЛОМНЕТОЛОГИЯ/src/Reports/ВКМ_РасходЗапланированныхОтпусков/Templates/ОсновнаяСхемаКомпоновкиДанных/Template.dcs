@@ -7,20 +7,6 @@
 	<dataSet xsi:type="DataSetQuery">
 		<name>НаборДанных1</name>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Сотрудник</dataPath>
-			<field>Сотрудник</field>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>ОтгуленныеДни</dataPath>
-			<field>ОтгуленныеДни</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Отгуленные дни</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>ЗапланированныеДниОтпуска</dataPath>
 			<field>ЗапланированныйОтпуск</field>
 			<title xsi:type="v8:LocalStringType">
@@ -50,9 +36,37 @@
 				</v8:item>
 			</title>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДатаНачала</dataPath>
+			<field>ДатаНачала</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДатаОкончания</dataPath>
+			<field>ДатаОкончания</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>КоличествоДней</dataPath>
+			<field>КоличествоДней</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>___</dataPath>
+			<field>___</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Сотрудник_ПланПоГрафику</dataPath>
+			<field>Сотрудник_ПланПоГрафику</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СотрудникНачисления</dataPath>
+			<field>СотрудникНачисления</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ОтгуленныеДни</dataPath>
+			<field>ОтгуленныеДни</field>
+		</field>
 		<dataSource>ИсточникДанных1</dataSource>
 		<query>ВЫБРАТЬ
-	ВКМ_ОсновныеНачисления.Сотрудник КАК Сотрудник,
+	ВКМ_ОсновныеНачисления.Сотрудник КАК СотрудникНачисления,
 	ЕСТЬNULL(ВЫБОР
 			КОГДА ВКМ_ОсновныеНачисления.ПериодДействияКонец &lt; &amp;ТекущаяДата
 				ТОГДА ВКМ_ОсновныеНачисления.ДниОтпуска
@@ -63,12 +77,45 @@
 		КОНЕЦ, 0) КАК ЗапланированныйОтпуск,
 	ВКМ_ОсновныеНачисления.ПериодДействияНачало КАК НачалоОтпуска,
 	ВКМ_ОсновныеНачисления.ПериодДействияКонец КАК КонецОтпуска
+ПОМЕСТИТЬ ВТ_ОСновныеНачисления
 ИЗ
 	РегистрРасчета.ВКМ_ОсновныеНачисления КАК ВКМ_ОсновныеНачисления
 ГДЕ
 	ВКМ_ОсновныеНачисления.ВидРасчета = ЗНАЧЕНИЕ(ПланВидовРасчета.ВКМ_ОсновныеНАчисления.Отпуск)
 	И ВКМ_ОсновныеНачисления.ПериодДействияНачало &gt;= &amp;НачалоВыбранногоГода
-	И ВКМ_ОсновныеНачисления.ПериодДействияКонец &lt;= &amp;КонецВыбранногоГода</query>
+	И ВКМ_ОсновныеНачисления.ПериодДействияКонец &lt;= &amp;КонецВыбранногоГода
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	ВКМ_ГрафикОтпусковОтпускаСотрудников.Сотрудник КАК Сотрудник_ПланПоГрафику,
+	ВКМ_ГрафикОтпусковОтпускаСотрудников.ДатаНачала КАК ДатаНачала,
+	ВКМ_ГрафикОтпусковОтпускаСотрудников.ДатаОкончания КАК ДатаОкончания,
+	ВКМ_ГрафикОтпусковОтпускаСотрудников.КоличествоДней КАК КоличествоДней
+ПОМЕСТИТЬ ВТ_ГрафикОтпусков
+ИЗ
+	Документ.ВКМ_ГрафикОтпусков.ОтпускаСотрудников КАК ВКМ_ГрафикОтпусковОтпускаСотрудников
+ГДЕ
+	ВКМ_ГрафикОтпусковОтпускаСотрудников.ДатаНачала &gt;= &amp;НачалоВыбранногоГода
+	И ВКМ_ГрафикОтпусковОтпускаСотрудников.ДатаОкончания &lt;= &amp;КонецВыбранногоГода
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	ВТ_ГрафикОтпусков.Сотрудник_ПланПоГрафику КАК Сотрудник_ПланПоГрафику,
+	ВТ_ГрафикОтпусков.ДатаНачала КАК ДатаНачала,
+	ВТ_ГрафикОтпусков.ДатаОкончания КАК ДатаОкончания,
+	ВТ_ГрафикОтпусков.КоличествоДней КАК КоличествоДней,
+	"---" КАК ___,
+	ВТ_ОСновныеНачисления.СотрудникНачисления КАК СотрудникНачисления,
+	ВТ_ОСновныеНачисления.НачалоОтпуска КАК НачалоОтпуска,
+	ВТ_ОСновныеНачисления.КонецОтпуска КАК КонецОтпуска,
+	ВТ_ОСновныеНачисления.ЗапланированныйОтпуск КАК ЗапланированныйОтпуск,
+	ВТ_ОСновныеНачисления.ОтгуленныеДни КАК ОтгуленныеДни
+ИЗ
+	ВТ_ОСновныеНачисления КАК ВТ_ОСновныеНачисления
+		ЛЕВОЕ СОЕДИНЕНИЕ ВТ_ГрафикОтпусков КАК ВТ_ГрафикОтпусков
+		ПО ВТ_ОСновныеНачисления.СотрудникНачисления = ВТ_ГрафикОтпусков.Сотрудник_ПланПоГрафику</query>
 	</dataSet>
 	<parameter>
 		<name>ТекущаяДата</name>
@@ -149,19 +196,34 @@
 		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
 			<dcsset:selection>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>Сотрудник</dcsset:field>
+					<dcsset:field>Сотрудник_ПланПоГрафику</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>ОтгуленныеДни</dcsset:field>
+					<dcsset:field>ДатаНачала</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>ЗапланированныеДниОтпуска</dcsset:field>
+					<dcsset:field>ДатаОкончания</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>КоличествоДней</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>___</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>СотрудникНачисления</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>НачалоОтпуска</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>КонецОтпуска</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>ЗапланированныеДниОтпуска</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>ОтгуленныеДни</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
 			<dcsset:dataParameters>
