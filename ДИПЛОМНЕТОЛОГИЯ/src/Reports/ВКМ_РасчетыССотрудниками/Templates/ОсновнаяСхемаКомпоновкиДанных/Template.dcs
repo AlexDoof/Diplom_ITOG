@@ -80,6 +80,26 @@
 				<dcscom:balanceType>ClosingBalance</dcscom:balanceType>
 			</role>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Поле1</dataPath>
+			<field>Поле1</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Поле1</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Поле2</dataPath>
+			<field>Поле2</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Поле2</v8:content>
+				</v8:item>
+			</title>
+		</field>
 		<dataSource>ИсточникДанных1</dataSource>
 		<query>ВЫБРАТЬ
 	ВКМ_ОсновныеНачисления.Сотрудник КАК Сотрудник,
@@ -91,9 +111,9 @@
 		ЛЕВОЕ СОЕДИНЕНИЕ РегистрРасчета.ВКМ_ДополнительныеНачисления КАК ВКМ_ДополнительныеНачисления
 		ПО ВКМ_ОсновныеНачисления.ПериодРегистрации = ВКМ_ДополнительныеНачисления.ПериодРегистрации
 			И (ВКМ_ДополнительныеНачисления.Сотрудник = ВКМ_ОсновныеНачисления.Сотрудник)
-ГДЕ
-	ВКМ_ОсновныеНачисления.ПериодРегистрации &gt;= &amp;ДатаНачало
-	И ВКМ_ОсновныеНачисления.ПериодРегистрации &lt;= &amp;ДатаКонец
+{ГДЕ
+	(ВКМ_ОсновныеНачисления.ПериодРегистрации &gt;= &amp;ДатаНачало) КАК Поле1,
+	(ВКМ_ОсновныеНачисления.ПериодРегистрации &lt;= &amp;ДатаКонец) КАК Поле2}
 
 СГРУППИРОВАТЬ ПО
 	ВКМ_ОсновныеНачисления.Сотрудник
@@ -110,7 +130,7 @@
 	ЕСТЬNULL(ВКМ_ВзаиморасчетыССотрудникамиОстаткиИОбороты.СуммаКонечныйОстаток, 0) КАК СуммаКонечныйОстаток
 ИЗ
 	ВТ_НачисленияДопИОсн КАК ВТ_НачисленияДопИОсн
-		ЛЕВОЕ СОЕДИНЕНИЕ РегистрНакопления.ВКМ_ВзаиморасчетыССотрудниками.ОстаткиИОбороты(&amp;ДатаНачало, &amp;ДатаКонец, , , ) КАК ВКМ_ВзаиморасчетыССотрудникамиОстаткиИОбороты
+		ЛЕВОЕ СОЕДИНЕНИЕ РегистрНакопления.ВКМ_ВзаиморасчетыССотрудниками.ОстаткиИОбороты({(&amp;ДатаНачало)}, {(&amp;ДатаКонец)}, , , ) КАК ВКМ_ВзаиморасчетыССотрудникамиОстаткиИОбороты
 		ПО (ВКМ_ВзаиморасчетыССотрудникамиОстаткиИОбороты.Сотрудник = ВТ_НачисленияДопИОсн.Сотрудник)</query>
 	</dataSet>
 	<totalField>
@@ -129,44 +149,6 @@
 		<dataPath>ОсновныеНачисления</dataPath>
 		<expression>Сумма(ОсновныеНачисления)</expression>
 	</totalField>
-	<parameter>
-		<name>НачалоПериода</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Начало периода</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>xs:dateTime</v8:Type>
-			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
-			</v8:DateQualifiers>
-		</valueType>
-		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>true</useRestriction>
-		<expression>&amp;ДатаНачало</expression>
-		<denyIncompleteValues>true</denyIncompleteValues>
-	</parameter>
-	<parameter>
-		<name>КонецПериода</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Конец периода</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>xs:dateTime</v8:Type>
-			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
-			</v8:DateQualifiers>
-		</valueType>
-		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>true</useRestriction>
-		<expression>&amp;ДатаКонец</expression>
-		<denyIncompleteValues>true</denyIncompleteValues>
-	</parameter>
 	<parameter>
 		<name>ДатаКонец</name>
 		<title xsi:type="v8:LocalStringType">

@@ -367,6 +367,10 @@
     <items xsi:type="form:FormField">
       <name>ВКМ_НачалоДействияДоговора</name>
       <id>16</id>
+      <title>
+        <key>ru</key>
+        <value>НачалоДействияДоговора</value>
+      </title>
       <visible>true</visible>
       <enabled>true</enabled>
       <userVisible>
@@ -418,6 +422,10 @@
     <items xsi:type="form:FormField">
       <name>ВКМ_КонецДействияДоговора</name>
       <id>19</id>
+      <title>
+        <key>ru</key>
+        <value>КонецДействияДоговора</value>
+      </title>
       <visible>true</visible>
       <enabled>true</enabled>
       <userVisible>

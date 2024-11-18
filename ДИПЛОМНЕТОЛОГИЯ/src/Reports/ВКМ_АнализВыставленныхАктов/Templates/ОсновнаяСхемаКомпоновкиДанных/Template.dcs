@@ -21,16 +21,6 @@
 			</role>
 		</field>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Период</dataPath>
-			<field>Период</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Период</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>Контрагент</dataPath>
 			<field>Контрагент</field>
 			<title xsi:type="v8:LocalStringType">
@@ -74,6 +64,26 @@
 			<dataPath>Заказ</dataPath>
 			<field>Заказ</field>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Поле2</dataPath>
+			<field>Поле2</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Поле2</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ЗаМесяц</dataPath>
+			<field>ЗаМесяц</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>За месяц</v8:content>
+				</v8:item>
+			</title>
+		</field>
 		<dataSource>ИсточникДанных1</dataSource>
 		<query>ВЫБРАТЬ
 	ВКМ_ВыполненныеКлиентуРаботыОстаткиИОбороты.Период КАК Период,
@@ -83,7 +93,7 @@
 	ВКМ_ВыполненныеКлиентуРаботыОстаткиИОбороты.Договор.ВКМ_АбонентскаяПлата КАК АбонентскаяПлатаСумма
 ПОМЕСТИТЬ вт_ОбслуживаниеКлиента
 ИЗ
-	РегистрНакопления.ВКМ_ВыполненныеКлиентуРаботы.ОстаткиИОбороты(&amp;НП, КОНЕЦПЕРИОДА(&amp;КП, ДЕНЬ), Месяц, , ) КАК ВКМ_ВыполненныеКлиентуРаботыОстаткиИОбороты
+	РегистрНакопления.ВКМ_ВыполненныеКлиентуРаботы.ОстаткиИОбороты({(&amp;НП)}, {(КОНЕЦПЕРИОДА(&amp;КП, ДЕНЬ))}, Месяц, , ) КАК ВКМ_ВыполненныеКлиентуРаботыОстаткиИОбороты
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -94,60 +104,26 @@
 	ОбработкаЗаказовОбороты.СуммаОтгрузкиОборот КАК Сумма
 ПОМЕСТИТЬ ВТ_Заказы
 ИЗ
-	РегистрНакопления.ОбработкаЗаказов.Обороты(&amp;НП, КОНЕЦПЕРИОДА(&amp;КП, ДЕНЬ), Месяц, Договор.ВидДоговора = ЗНАЧЕНИЕ(Перечисление.ВидыДоговоровКонтрагентов.АбонентскоеОбслуживание)) КАК ОбработкаЗаказовОбороты
+	РегистрНакопления.ОбработкаЗаказов.Обороты({(&amp;НП)}, {(КОНЕЦПЕРИОДА(&amp;КП, ДЕНЬ))}, Месяц, {(Договор.ВидДоговора = ЗНАЧЕНИЕ(Перечисление.ВидыДоговоровКонтрагентов.АбонентскоеОбслуживание)) КАК Поле2}) КАК ОбработкаЗаказовОбороты
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
 ВЫБРАТЬ
-	ЕСТЬNULL(ВТ_Заказы.Период, вт_ОбслуживаниеКлиента.Период) КАК Период,
+	МЕСЯЦ(ВТ_Заказы.Период) КАК ЗаМесяц,
 	ЕСТЬNULL(ВТ_Заказы.Контрагент, вт_ОбслуживаниеКлиента.Клиент) КАК Контрагент,
 	ЕСТЬNULL(ВТ_Заказы.Договор, вт_ОбслуживаниеКлиента.Договор) КАК Договор,
 	ЕСТЬNULL(ВТ_Заказы.Сумма, 0) КАК СуммаВыставлено,
 	ЕСТЬNULL(вт_ОбслуживаниеКлиента.Сумма, 0) КАК СуммаВыполнено,
 	ЕСТЬNULL(ВТ_Заказы.Договор.ВКМ_АбонентскаяПлата, вт_ОбслуживаниеКлиента.Договор.ВКМ_АбонентскаяПлата) КАК АбонентскаяПлата
 ИЗ
-	ВТ_Заказы КАК ВТ_Заказы
-		ПОЛНОЕ СОЕДИНЕНИЕ вт_ОбслуживаниеКлиента КАК вт_ОбслуживаниеКлиента
-		ПО ВТ_Заказы.Контрагент = вт_ОбслуживаниеКлиента.Клиент
-			И ВТ_Заказы.Договор = вт_ОбслуживаниеКлиента.Договор
-			И ВТ_Заказы.Период = вт_ОбслуживаниеКлиента.Период</query>
+	Справочник.ДоговорыКонтрагентов КАК ДоговорыКонтрагентов
+		{ЛЕВОЕ СОЕДИНЕНИЕ ВТ_Заказы КАК ВТ_Заказы
+		ПО ДоговорыКонтрагентов.Владелец = ВТ_Заказы.Контрагент}
+		{ЛЕВОЕ СОЕДИНЕНИЕ вт_ОбслуживаниеКлиента КАК вт_ОбслуживаниеКлиента
+		ПО ДоговорыКонтрагентов.Владелец = вт_ОбслуживаниеКлиента.Клиент}
+ГДЕ
+	ДоговорыКонтрагентов.ВидДоговора = ЗНАЧЕНИЕ(Перечисление.ВидыДоговоровКонтрагентов.АбонентскоеОбслуживание)</query>
 	</dataSet>
-	<parameter>
-		<name>НачалоПериода</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Начало периода</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>xs:dateTime</v8:Type>
-			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
-			</v8:DateQualifiers>
-		</valueType>
-		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>true</useRestriction>
-		<expression>&amp;Период.ДатаНачала</expression>
-	</parameter>
-	<parameter>
-		<name>КонецПериода</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Конец периода</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type>xs:dateTime</v8:Type>
-			<v8:DateQualifiers>
-				<v8:DateFractions>DateTime</v8:DateFractions>
-			</v8:DateQualifiers>
-		</valueType>
-		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
-		<useRestriction>true</useRestriction>
-		<expression>&amp;Период.ДатаОкончания</expression>
-	</parameter>
 	<parameter>
 		<name>КП</name>
 		<title xsi:type="v8:LocalStringType">
@@ -208,19 +184,22 @@
 		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
 			<dcsset:selection>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>Клиент</dcsset:field>
+					<dcsset:field>Контрагент</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>ЗаМесяц</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>СуммаВыставлено</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Договор</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>ДоговорВКМ_АбонентскаяПлата</dcsset:field>
+					<dcsset:field>СуммаВыполнено</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>НоменклатураРаботыСпециалиста</dcsset:field>
-				</dcsset:item>
-				<dcsset:item xsi:type="dcsset:SelectedItemField">
-					<dcsset:field>Итого</dcsset:field>
+					<dcsset:field>АбонентскаяПлата</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
 			<dcsset:dataParameters>
